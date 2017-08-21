@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">PlayingWithAndroid</string>
+    <string name="other_activity">Other Activity</string>
+    <string name="dosomething">DoSomething</string>
+</resources>
