@@ -1,2 +1,5 @@
-# android_programmering_h2017
-Eksempler til kurs i Android-Programmering Vår 2017 ved Høgskolen i Østfold
+# Eksempler Android-Programmering Høst 2017
+Eksempler til kurs i Android-Programmering høsten 2017 ved Høgskolen i Østfold
+
+## Forelesning 01
+* Publishing
