@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">PlayingWithIntents</string>
+    <string name="start_other_activity">Start OtherActivity</string>
+</resources>
