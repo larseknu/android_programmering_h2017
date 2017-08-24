@@ -6,7 +6,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
@@ -17,8 +17,44 @@
             </intent-filter>
         </activity>
         <activity android:name=".OtherActivity">
+            <intent-filter>
+                <action android:name="no.hiof.larseknu.playingwithintents.action.OTHER_ACTIVITY" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
+
+        <service
+            android:name=".MyIntentService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="no.hiof.larseknu.playingwithintents.action.PRODUCE" />
+            </intent-filter>
+        </service>
+
+        <activity
+            android:name=".GetTimeActivity"
+            android:label="@string/title_activity_get_time" >
+            <intent-filter>
+                <action android:name="no.hiof.larseknu.playingwithintents.action.SHOW_DATE" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="no.hiof.larseknu.playingwithintents.action.SHOW_TIME" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <receiver
+            android:name=".AirPlaneModeReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.AIRPLANE_MODE" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">PlayingWithIntents</string>
-    <string name="start_other_activity">Start OtherActivity</string>
+    <string name="start_other_activity">Start Other Activity!</string>
+    <string name="implicitly_start_other_activity">Implicitly Start Other Activity!</string>
+    <string name="time">TextView</string>
+    <string name="title_activity_get_time">GetTimeActivity</string>
+    <string name="show_time">Show Time</string>
+    <string name="show_date">Show Date</string>
+    <string name="open_website">Open Website</string>
+    <string name="run_service_job">Run Service Job</string>
+    <string name="picked_image">Picked image</string>
+    <string name="this_is_other_activity">This is Other Activity</string>
+    <string name="get_picture">Get picture!</string>
 </resources>
