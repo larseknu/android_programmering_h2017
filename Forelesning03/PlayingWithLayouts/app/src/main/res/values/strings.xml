@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">PlayingWithLayouts</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_layout_basics">LayoutBasicsActivity</string>
+    <string name="title_activity_linear_layout">LinearLayoutActivity</string>
+    <string name="title_activity_relative_layout">RelativeLayoutActivity</string>
+    <string name="title_activity_table_layout">TableLayoutActivity</string>
+    <string name="title_activity_frame_layout">FrameLayoutActivity</string>
+    <string name="title_activity_hierarchy_viewer">HierarchyViewerActivity</string>
+    <string name="layout_basics">Layout Basics</string>
+    <string name="linear_layout">Linear Layout</string>
+    <string name="frame_layout">Frame Layout</string>
+    <string name="table_layout">Table Layout</string>
+    <string name="relative_layout">Relative Layout</string>
+    <string name="one">1</string>
+    <string name="the_shawshank_redemption">The Shawshank Redemption</string>
+    <string name="stars_the_shawshank_redemption">Tim Robbins, Morgan Freeman, Bob Gunton</string>
+    <string name="score9_3">9.3</string>
+    <string name="two">2</string>
+    <string name="despicable_me">Despicable Me</string>
+    <string name="score7_6">7.6</string>
+    <string name="stars_despicable_me">Steve Carell, Jason Segel, Russell Brand</string>
+    <string name="hierarchy_viewer">Hierarchy Viewer</string>
+    <string name="happy_smiley">Happy Smiley</string>
+    <string name="left">Left</string>
+    <string name="right">Right</string>
+    <string name="middle">Middle</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="center">Center</string>
+    <string name="north">North</string>
+    <string name="east">East</string>
+    <string name="west">West</string>
+    <string name="south">South</string>
+    <string name="wolf_of_wall_street">Wolf of Wall Street</string>
+    <string name="poster_frame">Poster Frame</string>
+    <string name="movies">Movies</string>
+    <string name="show_smileys">Show Smileys</string>
+    <string name="hello">Hello</string>
+    <string name="world">world</string>
+    <string name="deadpool_poster">Deadpool Poster</string>
+
+</resources>

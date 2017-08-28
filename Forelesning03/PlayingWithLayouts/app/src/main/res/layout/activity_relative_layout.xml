@@ -1,0 +1,70 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text" />
+
+    <Button
+        android:id="@+id/ok_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ok"
+        android:layout_below="@id/editText"
+        android:layout_alignParentRight="true" />
+    
+    <Button
+        android:id="@+id/cancel_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cancel"
+        android:layout_below="@id/editText"
+        android:layout_toLeftOf="@id/ok_button"
+        android:layout_alignWithParentIfMissing="true" />
+
+    <TextView
+        android:id="@+id/center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/center"
+        android:textSize="40sp"
+        android:layout_centerInParent="true"
+        android:background="@color/blue" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/north"
+        android:background="@color/lime_green"
+        android:layout_above="@id/center"
+        android:layout_alignLeft="@id/center"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/east"
+        android:background="@color/lime_green"
+        android:layout_toRightOf="@id/center"
+        android:layout_alignTop="@id/center" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/west"
+        android:textSize="30sp"
+        android:background="@color/lime_green"
+        android:layout_toLeftOf="@id/center"
+        android:layout_alignBaseline="@id/center" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/south"
+        android:background="@color/lime_green"
+        android:layout_below="@id/center"
+        android:layout_alignRight="@id/center" />
+
+</RelativeLayout>
