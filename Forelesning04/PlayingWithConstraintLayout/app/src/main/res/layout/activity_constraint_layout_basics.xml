@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+
+    <TextView
+        android:id="@+id/textViewA"
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:text="@string/a"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="8dp"
+        android:background="@android:color/holo_blue_light"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewB"
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:text="@string/b"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:background="@android:color/holo_green_light"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/textViewA" />
+
+    <TextView
+        android:id="@+id/textViewC"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:text="@string/c"
+        android:layout_marginTop="32dp"
+        android:background="@android:color/holo_orange_light"
+        app:layout_constraintTop_toBottomOf="@id/textViewA"
+        app:layout_constraintLeft_toLeftOf="@+id/textViewA"
+        app:layout_constraintRight_toRightOf="@+id/textViewA" />
+
+
+</android.support.constraint.ConstraintLayout>
