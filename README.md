@@ -3,13 +3,13 @@ Eksempler til kurs i Android-Programmering høsten 2017 ved Høgskolen i Østfol
 
 ## Forelesning 04
 * Layouts
-** FrameLayout
-** ConstraintLayout
+* FrameLayout
+* ConstraintLayout
 
 ## Forelesning 03
 * Layouts
-** LinearLayout
-** RelativeLayout
+* LinearLayout
+* RelativeLayout
 
 ## Forelesning 02
 * Activities og Intents
