@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">ConstraintLayout</string>
+    <string name="deadpool_summary">Based upon Marvel Comics\' most unconventional hero, Deadpool tells the origin story of former Special Forces operative turned mercenary Wade Wilson. Who after being subjected to a rogue experiment leaves him with accelerated healing powers, adopts the alter ego Deadpool.</string>
+    <string name="artist_philter">Philter</string>
+    <string name="song_title_we_move_like_wolves">We Move Like Wolves</string>
+    <string name="time_elapsed">00:19</string>
+    <string name="time_song_duration">03:10</string>
+    <string name="music_cover_art">Music Cover Art</string>
+    <string name="play_button">Play Button</string>
+    <string name="skip_backward_button">Skip Backwards Button</string>
+    <string name="skip_forward_button">Skip Forward Button</string>
+    <string name="movie_title_deadpool">Deadpool</string>
+    <string name="movie_year_deadpool">2016</string>
+    <string name="duration_movie_deadpool">1 hr 48 min</string>
+    <string name="download_movie_button">Download Movie Button</string>
+    <string name="add_to_playlist_button">Add To Playlist Button</string>
+    <string name="mark_as_watched_button">Mark As Watched Button</string>
+    <string name="movie_poster">Movie Poster</string>
+    <string name="movie_header">Movie Header</string>
+    <string name="time_icon">Time Icon</string>
+    <string name="a">A</string>
+    <string name="c">C</string>
+    <string name="b">B</string>
+    <string name="d">D</string>
+    <string name="e">E</string>
+    <string name="something_something">Something, something...</string>
+    <string name="push_me">Push me!</string>
+    <string name="some_text_in_the_textview">Some text in the textview</string>
+</resources>
