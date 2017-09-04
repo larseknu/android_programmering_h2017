@@ -11,9 +11,13 @@ import no.hiof.larseknu.playingwithfragments.R;
 
 
 public class Movie {
-
+    private int id;
     private String title;
     private int imageId;
+
+    public int getId() { return id; }
+
+    public void setId(int id) { this.id = id; }
 
     public String getTitle() {
         return title;
@@ -38,7 +42,7 @@ public class Movie {
         int[] posters = {
                 R.drawable.captain_america_civil_war,
                 R.drawable.donnie_darko,
-                R.drawable.iron_man_3,
+                R.drawable.deadpool_poster,
                 R.drawable.spirited_away,
                 R.drawable.star_wars_the_force_awakens,
                 R.drawable.the_hobbit,
@@ -48,7 +52,7 @@ public class Movie {
 
         String[] titles = {"Captain America Civil War",
                 "Donnie Darko",
-                "Iron Man 3",
+                "Deadpool",
                 "Spirited Away",
                 "Star Wars The Force Awakens",
                 "The Hobbit",
@@ -58,6 +62,7 @@ public class Movie {
         for (int i = 0; i < posters.length; i++) {
 
             Movie current = new Movie();
+            current.setId(i);
             current.setTitle(titles[i]);
             current.setImageId(posters[i]);
             data.add(current);
@@ -65,5 +70,7 @@ public class Movie {
 
         return data;
     }
+
+
 }
 

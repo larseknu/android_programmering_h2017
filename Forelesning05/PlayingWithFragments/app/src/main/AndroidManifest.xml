@@ -20,15 +20,20 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ButtonHandlingActivity"
+            android:name=".buttonhandlingexample.ButtonHandlingActivity"
             android:label="@string/title_activity_button_handling"></activity>
         <activity
-            android:name=".TabbedMovieActivity"
+            android:name=".fragmenttabsexample.TabbedMovieActivity"
             android:label="@string/tabbed_movies">
 
         </activity>
         <activity
-            android:name=".MovieActivity"
+            android:name=".fragmentdetailexample.MovieActivity"
+            android:label="@string/title_activity_movie">
+
+        </activity>
+        <activity
+            android:name=".fragmentdetailexample.MovieDetailActivity"
             android:label="@string/title_activity_movie">
 
         </activity>

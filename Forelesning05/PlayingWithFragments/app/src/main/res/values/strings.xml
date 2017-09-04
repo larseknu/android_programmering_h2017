@@ -4,8 +4,26 @@
     <string name="title_activity_movie">MovieActivity</string>
     <string name="movie_poster">Movie Poster</string>
     <string name="movies">Movies</string>
-    <string name="captain_america_civil_war">Captain America Civil War</string>
     <string name="your_watchlist">Your Watchlist</string>
     <string name="discover_new_movies">Discover New Movies</string>
     <string name="tabbed_movies">Tabbed Movies</string>
+    <string name="duration_movie_deadpool">1 hr 48 min</string>
+    <string name="time_icon">Time Icon</string>
+    <string name="mark_as_watched_button">Watched Button</string>
+    <string name="add_to_playlist_button">Add To Playlist Button</string>
+    <string name="download_movie_button">Download Movie Button</string>
+    <string name="movie_year_deadpool">2016</string>
+    <string name="movie_title_deadpool">Deadpool</string>
+    <string name="play_button">Play Button</string>
+    <string name="deadpool_summary">Based upon Marvel Comics\\\' most unconventional hero, Deadpool tells the origin story of former Special Forces operative turned mercenary Wade Wilson. Who after being subjected to a rogue experiment leaves him with accelerated healing powers, adopts the alter ego Deadpool.</string>
+    <string name="movie_header">Movie Header</string>
+    <string name="add_happy">Add Happy</string>
+    <string name="add_sad">Add Sad</string>
+    <string name="remove_happy">Remove Happy</string>
+    <string name="rmvsad">Remove Sad</string>
+    <string name="rephappy">Replace Happy</string>
+    <string name="repsad">Replace Sad</string>
+    <string name="click_count">Click count:</string>
+    <string name="click_me">Click me!</string>
+    <string name="zero">0</string>
 </resources>

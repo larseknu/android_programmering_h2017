@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="no.hiof.larseknu.playingwithfragments.ButtonHandlingActivityFragment">
+    tools:context="no.hiof.larseknu.playingwithfragments.buttonhandlingexample.ButtonHandlingActivityFragment">
 
 
     <Button
@@ -15,7 +15,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
-        android:text="Click me!"
+        android:text="@string/click_me"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -28,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:text="Click count:"
+        android:text="@string/click_count"
         android:textSize="36sp"
         app:layout_constraintBottom_toTopOf="@+id/clickMeButton"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -39,7 +39,7 @@
         android:id="@+id/textViewClickCountNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0"
+        android:text="@string/zero"
         android:textSize="36sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/textViewClickCount"
         app:layout_constraintLeft_toRightOf="@+id/textViewClickCount"
