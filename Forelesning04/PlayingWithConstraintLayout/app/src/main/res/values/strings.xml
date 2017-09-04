@@ -26,4 +26,5 @@
     <string name="something_something">Something, something...</string>
     <string name="push_me">Push me!</string>
     <string name="some_text_in_the_textview">Some text in the textview</string>
+    <string name="removeview">RemoveView</string>
 </resources>

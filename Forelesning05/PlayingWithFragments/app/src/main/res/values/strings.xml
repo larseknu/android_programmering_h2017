@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">PlayingWithFragments</string>
+    <string name="title_activity_button_handling">ButtonHandlingActivity</string>
+    <string name="title_activity_movie">MovieActivity</string>
+    <string name="movie_poster">Movie Poster</string>
+    <string name="movies">Movies</string>
+    <string name="captain_america_civil_war">Captain America Civil War</string>
+    <string name="your_watchlist">Your Watchlist</string>
+    <string name="discover_new_movies">Discover New Movies</string>
+    <string name="tabbed_movies">Tabbed Movies</string>
+</resources>

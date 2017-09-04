@@ -1,0 +1,15 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="no.hiof.larseknu.playingwithfragments.MainActivity">
+    <item
+        android:id="@+id/action_button_handling"
+        android:title="@string/title_activity_button_handling"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_movie"
+        android:title="@string/movies" />
+    <item
+        android:id="@+id/action_tabbed_movie"
+        android:title="@string/tabbed_movies" />
+</menu>
