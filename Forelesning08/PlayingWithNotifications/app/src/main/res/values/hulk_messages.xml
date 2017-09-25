@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array
+        name="hulk_messages">
+        <item>I need help!</item>
+        <item>Why are you not answering?!?</item>
+        <item>Help! It´s happening!! :(</item>
+        <item>AAARRGHRGRHGRH!!! >=( </item>
+    </string-array>
+</resources>

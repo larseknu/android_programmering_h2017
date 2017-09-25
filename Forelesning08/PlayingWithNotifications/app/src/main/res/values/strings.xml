@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">PlayingWithNotifications</string>
+    <string name="create_notification">Create notification</string>
+    <string name="hello_world">Hello world</string>
+    <string name="multiple_notification">Multiple notification</string>
+    <string name="big_text_notification">Big Text Notification</string>
+    <string name="big_picture_notification">Big Picture Notification</string>
+    <string name="image">Image</string>
+</resources>
