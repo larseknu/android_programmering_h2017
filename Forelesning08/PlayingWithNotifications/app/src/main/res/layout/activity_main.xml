@@ -26,5 +26,19 @@
         android:layout_margin="5dp"
         android:text="@string/multiple_notification"
         android:onClick="btnMultipleNotification" />
+    <Button
+        android:id="@+id/bigTextNotificationButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="@string/big_text_notification"
+        android:onClick="btnBigTextNotificationOnClick" />
 
+    <Button
+        android:id="@+id/bigPictureNotificationButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="@string/big_picture_notification"
+        android:onClick="btnBigPictureNotificationOnClick" />
 </LinearLayout>
