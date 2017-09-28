@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Hello, I'm a snackbar!", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                        .setAction("Action", new MyActionListener()).show();
             }
         });
 
@@ -44,5 +44,15 @@ public class MainActivity extends AppCompatActivity {
         navigationDrawerFragment.updateCheckedItem(R.id.nav_shows);
 
         super.onStart();
+    }
+
+    private class MyActionListener  implements View.OnClickListener{
+
+        @Override
+        public void onClick(View v) {
+            // Code to do the desired Action
+            Snackbar.make(v, "I'm dead! =(", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+        }
     }
 }
