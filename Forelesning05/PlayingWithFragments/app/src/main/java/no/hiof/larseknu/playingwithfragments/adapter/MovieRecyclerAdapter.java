@@ -17,11 +17,11 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<MovieViewHolder> 
     private OnMovieSelectedListener movieSelectedListener;
     private RecycleAdapterListener recycleAdapterListener;
 
-    public MovieRecyclerAdapter(Context context, List<Movie> data, final RecycleAdapterListener recycleAdapterListener) {
+    public MovieRecyclerAdapter(Context context, List<Movie> data, RecycleAdapterListener extRecycleAdapterListener) {
         this.movieData = data;
         this.inflater = LayoutInflater.from(context);
 
-        this.recycleAdapterListener = recycleAdapterListener;
+        this.recycleAdapterListener = extRecycleAdapterListener;
 
         movieSelectedListener = new OnMovieSelectedListener() {
             @Override
