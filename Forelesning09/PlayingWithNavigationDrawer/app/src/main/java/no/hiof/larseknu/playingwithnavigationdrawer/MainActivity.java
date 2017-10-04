@@ -26,9 +26,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Hello, I'm a snackbar!", Snackbar.LENGTH_LONG)
-                        .setAction("Action", new MyActionListener()).show();
+                        .setAction("Kill", new MyActionListener()).show();
             }
         });
+
+
+
+
+
+
 
         setUpDrawer();
     }
@@ -45,6 +51,10 @@ public class MainActivity extends AppCompatActivity {
 
         super.onStart();
     }
+
+
+
+
 
     private class MyActionListener  implements View.OnClickListener{
 
