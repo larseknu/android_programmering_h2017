@@ -51,12 +51,22 @@ public class BoundActivity extends AppCompatActivity {
         bindService(intent, connection, BIND_AUTO_CREATE);
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unbindService(connection);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 
     public void getLocation(View view) {
         if(isBound) {
             Location location = myBoundService.getCurrentLocation();
             if (location != null)
-                locationTextView.setText(location.toString());
+                locationTextView.setText("Lon: " + location.getLongitude() + " Lat: " + location.getLatitude());
         }
     }
 }

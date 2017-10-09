@@ -11,6 +11,9 @@ import com.firebase.jobdispatcher.JobService;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import no.hiof.larseknu.playingwithservices.Worker;
 
 /**
@@ -18,41 +21,14 @@ import no.hiof.larseknu.playingwithservices.Worker;
  */
 
 public class MyScheduledService extends JobService {
-    private static String LOGTAG = "ScheduleService";
+    private static String LOGTAG = "MyScheduledService";
 
     @Override
     public boolean onStartJob(JobParameters job) {
-        Log.d(LOGTAG, "ScheduleService Started");
+        Log.d(LOGTAG, "MyScheduleService Started");
 
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Worker worker = new Worker(getApplicationContext());
-                    Log.d(LOGTAG, "Worker Started");
-
-                    Location location = worker.getLocation();
-                    Log.d(LOGTAG, "Got location");
-
-                    String address = worker.reverseGeocode(location);
-                    Log.d(LOGTAG, "Got address");
-
-                    JSONObject json = worker.getJSONObjectFromURL("http://www.it-stud.hiof.no/android/data/randomData.php");
-                    Log.d(LOGTAG, "Got JSON");
-
-                    worker.saveToFile(location, address, json.getString("title"), "ScheduleServiceJob.txt");
-                    Log.d(LOGTAG, "Saved file");
-
-                    Log.d(LOGTAG, "ScheduleService Done");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        });
-
-        thread.start();
-
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        executorService.submit(new MyRunnable());
 
         return true;
     }
@@ -60,5 +36,32 @@ public class MyScheduledService extends JobService {
     @Override
     public boolean onStopJob(JobParameters job) {
         return false;
+    }
+
+    class MyRunnable implements Runnable {
+
+        @Override
+        public void run() {
+            try {
+                Worker worker = new Worker(getApplicationContext());
+                Log.d(LOGTAG, "Worker Started");
+
+                Location location = worker.getLocation();
+                Log.d(LOGTAG, "Got location");
+
+                String address = worker.reverseGeocode(location);
+                Log.d(LOGTAG, "Got address");
+
+                JSONObject json = worker.getJSONObjectFromURL("http://www.it-stud.hiof.no/android/data/randomData.php");
+                Log.d(LOGTAG, "Got JSON");
+
+                worker.saveToFile(location, address, json.getString("title"), "ScheduleServiceJob.txt");
+                Log.d(LOGTAG, "Saved file");
+
+                Log.d(LOGTAG, "MyScheduledService Done");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

@@ -14,91 +14,96 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 import no.hiof.larseknu.playingwithservices.Worker;
 
 public class MyStartedService extends Service {
-    private static final String LOGTAG = MyStartedService.class.getSimpleName();
-    private ResultReceiver resultReceiver;
+    private static final String LOGTAG = "MyStartedService";
+
+    private Worker worker;
+    private ExecutorService executorService;
+    private ScheduledExecutorService scheduledExecutorService;
 
     @Override
     public void onCreate() {
-        Log.i(LOGTAG, "Service Created + Thread:" + Thread.currentThread().getName());
-        super.onCreate();
+        Log.i(LOGTAG, "MyStartedService.onCreate Thread: " + Thread.currentThread().getName());
+        worker = new Worker(this);
+        worker.monitorGpsInBackground();
+        executorService = Executors.newSingleThreadExecutor();
+        scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.i(LOGTAG, "Service Started + Thread:" + Thread.currentThread().getName());
+        Log.i(LOGTAG, "MyStartedService.onStartCommand Thread: " + Thread.currentThread().getName());
 
-        resultReceiver = intent.getParcelableExtra("receiver");
+        ServiceRunnable runnable = new ServiceRunnable(this, startId);
 
-        new MyAsyncTask().execute();
+        executorService.execute(runnable);
 
-        return START_STICKY;
-    }
-
-
-    @Nullable
-    @Override
-    public IBinder onBind(Intent intent) {
-        Log.i(LOGTAG, "Service OnBind ran + Thread:" + Thread.currentThread().getName());
-
-        return null;
+        return Service.START_NOT_STICKY;
     }
 
     @Override
     public void onDestroy() {
-        Log.i(LOGTAG, "Service Destroyed + Thread:" + Thread.currentThread().getName());
-
-        super.onDestroy();
+        worker.stopGpsMonitoring();
     }
 
-    class MyAsyncTask extends AsyncTask<Void, String, Void> {
-        @Override
-        protected Void doInBackground(Void... voids) {
-            try {
-                Worker worker = new Worker(getApplicationContext());
-                publishProgress("Worker Started");
-                Log.i(LOGTAG, "Worker Started + Thread:" + Thread.currentThread().getName());
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
+    }
 
+    class ServiceRunnable implements Runnable {
+        MyStartedService myStartedService;
+        int startId;
+
+        public ServiceRunnable(MyStartedService myStartedService, int startId) {
+            this.myStartedService = myStartedService;
+            this.startId = startId;
+        }
+
+        @Override
+        public void run() {
+            Log.i(LOGTAG, "MyStartedService.ServiceRunnable Thread: " + Thread.currentThread().getName());
+            try {
                 Location location = worker.getLocation();
-                publishProgress("Got location");
 
                 String address = worker.reverseGeocode(location);
-                publishProgress("Got address");
 
-                JSONObject json = worker.getJSONObjectFromURL("http://www.it-stud.hiof.no/android/data/randomData.php");
-                publishProgress("Got JSON");
+                JSONObject jsonObject = worker.getJSONObjectFromURL("");
 
-                worker.saveToFile(location, address, json.getString("title"), "ScheduleServiceJob.txt");
-                publishProgress("Saved file");
-
-                publishProgress("MyService Done");
+                worker.saveToFile(location, address, jsonObject.getString("title"), "MyStartedService.out");
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-            return null;
+            DelayedStopRequest stopRequest = new DelayedStopRequest(myStartedService, startId);
+
+            myStartedService.scheduledExecutorService.schedule(stopRequest, 10, TimeUnit.SECONDS);
+        }
+    }
+
+    class DelayedStopRequest implements Runnable {
+        MyStartedService myStartedService;
+        int startId;
+
+        public DelayedStopRequest(MyStartedService myStartedService, int startId) {
+            this.myStartedService = myStartedService;
+            this.startId = startId;
         }
 
         @Override
-        protected void onProgressUpdate(String... values) {
-            Toast.makeText(MyStartedService.this, values[0], Toast.LENGTH_LONG).show();
+        public void run() {
+            Log.i(LOGTAG, "MyStartedService.DelayedStopRequest Thread: " + Thread.currentThread().getName());
 
-            Log.i(LOGTAG, values[0] + " + Thread:" + Thread.currentThread().getName());
-        }
+            boolean stopping = myStartedService.stopSelfResult(startId);
 
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-
-            Log.i(LOGTAG, "MyService PostExecute + Thread:" + Thread.currentThread().getName());
-
-            Bundle bundle = new Bundle();
-            bundle.putString("resultStartedService", "Job Done");
-            resultReceiver.send(1, bundle);
-
-            stopSelf();
+            Log.i("LOGTAG", "Service with startid: " + startId + " stopping: " + stopping);
         }
     }
 }

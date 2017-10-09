@@ -74,12 +74,8 @@ public class MainActivity extends AppCompatActivity {
 
             Log.i("MyResultReceiver", "Thread: " + Thread.currentThread().getName());
 
-            if (resultCode == 1 && resultData != null) {
-                String result = resultData.getString("resultStartedService");
-                resultTextView.setText(result);
-            }
-            else if (resultCode == 2 && resultData != null) {
-                final String result = resultData.getString("resultIntentService");
+           if (resultCode == MyIntentService.RESULT_CODE && resultData != null) {
+                final String result = resultData.getString(MyIntentService.RESULT_DATA_KEY);
 
                 resultTextView.post(new Runnable() {
                     @Override

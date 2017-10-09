@@ -4,8 +4,11 @@ import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Bundle;
 import android.os.Environment;
+import android.os.HandlerThread;
 import android.util.Log;
 
 import org.json.JSONException;
@@ -24,12 +27,43 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import no.hiof.larseknu.playingwithservices.services.MyBoundService;
+
 public class Worker {
     private Context context;
     private static boolean useGpsToGetLocation = true;
 
     public Worker(Context context) {
         this.context = context;
+    }
+
+    HandlerThread gpsHandlerThread;
+    LocationListener locationListener;
+    LocationManager locationManager;
+
+    public void monitorGpsInBackground(){
+        gpsHandlerThread = new HandlerThread("GPSThread");
+        gpsHandlerThread.start();
+
+        if (locationListener == null)
+            this.locationListener = new NoOpLocationListener();
+
+        locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this.locationListener, gpsHandlerThread.getLooper());
+    }
+
+    public void monitorGpsInBackground(LocationListener locationListener){
+        this.locationListener = locationListener;
+        monitorGpsInBackground();
+    }
+
+
+    public void stopGpsMonitoring(){
+        if(locationManager != null)
+            locationManager.removeUpdates(locationListener);
+
+        if(gpsHandlerThread != null)
+            gpsHandlerThread.quit();
     }
 
     public Location getLocation() {
@@ -165,6 +199,21 @@ public class Worker {
         }
         catch (InterruptedException e) {
             e.printStackTrace();
+        }
+    }
+
+    class NoOpLocationListener implements LocationListener {
+
+        public void onLocationChanged(Location location) {
+        }
+
+        public void onStatusChanged(String s, int i, Bundle bundle) {
+        }
+
+        public void onProviderEnabled(String s) {
+        }
+
+        public void onProviderDisabled(String s) {
         }
     }
 }

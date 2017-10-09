@@ -28,8 +28,11 @@ public class MyIntentService extends IntentService {
     private static final String EXTRA_FILENAME = "no.hiof.larseknu.playingwithservices.extra.FILENAME";
     private static final String EXTRA_RESULT_RECEIVER = "no.hiof.larseknu.playingwithservices.extra.RESULT_RECEIVER";
 
-    private ResultReceiver resultReceiver;
+    public static final int RESULT_CODE = 1;
+    public static final String RESULT_DATA_KEY = "no.hiof.larseknu.playingwithservices.intentservice.RESULT_DATA";
 
+
+    private ResultReceiver resultReceiver;
 
     public MyIntentService() {
         super("MyIntentService");
@@ -52,12 +55,12 @@ public class MyIntentService extends IntentService {
             if (ACTION_RETREIVE_AND_SAVE_ADDRESS.equals(action)) {
                 final String fileName = intent.getStringExtra(EXTRA_FILENAME);
                 resultReceiver = intent.getParcelableExtra(EXTRA_RESULT_RECEIVER);
-                handleActionFoo(fileName);
+                handleActionSaveAddress(fileName);
             }
         }
     }
 
-    private void handleActionFoo(String fileName) {
+    private void handleActionSaveAddress(String fileName) {
         try {
             Worker worker = new Worker(getApplicationContext());
             Log.d(LOGTAG, "Worker Started");
@@ -77,9 +80,8 @@ public class MyIntentService extends IntentService {
             Log.d(LOGTAG, "ScheduleService Done");
 
             Bundle bundle = new Bundle();
-            bundle.putString("resultIntentService", "IntentService Done");
-
-            resultReceiver.send(2, bundle);
+            bundle.putString(RESULT_DATA_KEY, "IntentService Done");
+            resultReceiver.send(RESULT_CODE, bundle);
         } catch (JSONException e) {
             e.printStackTrace();
         }
