@@ -3,9 +3,13 @@ package no.hiof.larseknu.playingwithgooglemaps;
 import android.Manifest;
 import android.animation.ObjectAnimator;
 import android.animation.TypeEvaluator;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Camera;
 import android.graphics.Color;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -51,44 +55,18 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private GoogleMap gMap;
     private LatLng HIOF = new LatLng(59.12797849, 11.35272861);
     private LatLng FREDRIKSTAD = new LatLng(59.21047628, 10.93994737);
+    private String[] locationPermission = {Manifest.permission.ACCESS_FINE_LOCATION};
 
     private int kittyCounter = 1;
+
     private ArrayList<Marker> kittyMarkers;
 
     private GMapV2Direction mapDirection;
 
     private static final int LOCATION_PERMISSION = 1;
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case (R.id.animateKittens):
-                for (Marker kittyMarker : kittyMarkers) {
-                    animateMarker(kittyMarker, FREDRIKSTAD);
-                }
-                break;
-            case (R.id.drawRoute):
-                new drawRoute().execute();
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void setDefaultUiSettings() {
-        UiSettings uiSettings = gMap.getUiSettings();
-        uiSettings.setCompassEnabled(true);
-        uiSettings.setTiltGesturesEnabled(true);
-        uiSettings.setZoomControlsEnabled(true);
-        uiSettings.setMapToolbarEnabled(false);
-    }
+    private KittenLocation kittenLocation;
+    private ArrayList<KittenLocation> kittenLocations;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +78,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         kittyMarkers = new ArrayList<Marker>();
 
+        if (savedInstanceState != null) {
+            // We get our KittenLocation from the savedInstance bundle
+            //kittenLocation = savedInstanceState.getParcelable("found_kitten");
+            kittenLocations = savedInstanceState.getParcelableArrayList("found_all_kittens");
+        }
+
         mapDirection = new GMapV2Direction();
 
         Spinner spinner = (Spinner) findViewById(R.id.layers_spinner);
@@ -109,76 +93,31 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         spinner.setOnItemSelectedListener(this);
     }
 
-    @AfterPermissionGranted(LOCATION_PERMISSION)
-    private void setLocationEnabled() {
-        String[] perms = {Manifest.permission.ACCESS_FINE_LOCATION};
-        if (EasyPermissions.hasPermissions(this, perms)) {
-            gMap.setMyLocationEnabled(true);
-        } else {
-            // Do not have permissions, request them now
-            EasyPermissions.requestPermissions(this, getString(R.string.no_location_permission),
-                    LOCATION_PERMISSION, perms);
-        }
-    }
-
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    public void onSaveInstanceState(Bundle outState) {
+        // We want to save one of the kittens if one exists
+        if (!kittyMarkers.isEmpty()) {
+            // Gets the first kitten
+            Marker kittyMarker = kittyMarkers.get(0);
+            // Instantiate KittenLocation, which is a parcelable class, based on data from the marker
+            KittenLocation kittenLocation = new KittenLocation(kittyMarker.getTitle(), new LatLng(kittyMarker.getPosition().latitude, kittyMarker.getPosition().longitude));
+            // Put the KittenLocation data into the bundle
+            outState.putParcelable("found_kitten", kittenLocation);
 
-        // Forward results to EasyPermissions
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
-    }
+            ArrayList<KittenLocation> kittenLocations = new ArrayList<>();
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        String layerType = (String) parent.getItemAtPosition(position);
-
-        if (gMap != null) {
-            if (layerType.equals(getString(R.string.hybrid))) {
-                gMap.setMapType(MAP_TYPE_HYBRID);
-
-            } else if (layerType.equals(getString(R.string.satellite))) {
-                gMap.setMapType(MAP_TYPE_SATELLITE);
-
-            } else if (layerType.equals(getString(R.string.terrain))) {
-                gMap.setMapType(MAP_TYPE_TERRAIN);
-
-            } else if (layerType.equals(getString(R.string.none))) {
-                gMap.setMapType(MAP_TYPE_NONE);
-
-            } else {
-                gMap.setMapType(MAP_TYPE_NORMAL);
-            }
-        }
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
-    }
-
-    private class drawRoute extends AsyncTask<Void, Void, PolylineOptions> {
-        @Override
-        protected PolylineOptions doInBackground(Void... params) {
-            Document doc = mapDirection.getDocument(HIOF, FREDRIKSTAD, GMapV2Direction.MODE_DRIVING);
-
-            ArrayList<LatLng> directionPoint = mapDirection.getDirection(doc);
-            PolylineOptions rectLine = new PolylineOptions().width(3).color(Color.BLUE);
-
-            for (int i = 0; i < directionPoint.size(); i++) {
-                rectLine.add(directionPoint.get(i));
+            for (Marker marker:
+                    kittyMarkers) {
+                kittenLocations.add(new KittenLocation(marker.getTitle(), new LatLng(marker.getPosition().latitude, marker.getPosition().longitude)));
             }
 
-            return rectLine ;
+            outState.putParcelableArrayList("found_all_kittens", kittenLocations);
         }
 
-        @Override
-        protected void onPostExecute(PolylineOptions result) {
-            gMap.addPolyline(result);
-        }
+        super.onSaveInstanceState(outState);
     }
 
-
+    //region Map setup
     @Override
     public void onMapReady(GoogleMap googleMap) {
         gMap = googleMap;
@@ -196,8 +135,104 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         setDefaultUiSettings();
 
         setLocationEnabled();
+
+        new DrawRoute().execute(HIOF);
+
+        if (kittenLocations != null) {
+            for (KittenLocation kitten:
+                    kittenLocations) {
+                addKittenMarker(kitten.getLatLng(), kitten.getName());
+            }
+        }
+
+        if (kittenLocation != null) {
+            // We add the kitten marker to the map
+            addKittenMarker(kittenLocation.getLatLng(), "Found Kitten");
+        }
+
+        gMap.setMapType(MAP_TYPE_SATELLITE);
     }
 
+    private void setDefaultUiSettings() {
+        UiSettings uiSettings = gMap.getUiSettings();
+        uiSettings.setCompassEnabled(true);
+        uiSettings.setTiltGesturesEnabled(true);
+        uiSettings.setZoomControlsEnabled(true);
+        uiSettings.setMapToolbarEnabled(false);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        String layerType = (String) parent.getItemAtPosition(position);
+
+        if (gMap != null) {
+            if (layerType.equals(getString(R.string.hybrid))) {
+                gMap.setMapType(MAP_TYPE_HYBRID);
+
+            } else if (layerType.equals(getString(R.string.satellite))) {
+                gMap.setMapType(MAP_TYPE_SATELLITE);
+            } else if (layerType.equals(getString(R.string.terrain))) {
+                gMap.setMapType(MAP_TYPE_TERRAIN);
+
+            } else if (layerType.equals(getString(R.string.none))) {
+                gMap.setMapType(MAP_TYPE_NONE);
+
+            } else {
+                gMap.setMapType(MAP_TYPE_NORMAL);
+            }
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
+    //endregion
+
+    //region Route drawing
+    private class DrawRoute extends AsyncTask<LatLng, Void, PolylineOptions> {
+        @Override
+        protected PolylineOptions doInBackground(LatLng... location) {
+            LatLng startLocation = HIOF;
+            if (location[0] != null)
+                startLocation = location[0];
+
+            Document doc = mapDirection.getDocument(startLocation, FREDRIKSTAD, GMapV2Direction.MODE_DRIVING);
+
+            ArrayList<LatLng> directionPoint = mapDirection.getDirection(doc);
+            PolylineOptions rectLine = new PolylineOptions().width(3).color(Color.BLUE);
+
+            for (int i = 0; i < directionPoint.size(); i++) {
+                rectLine.add(directionPoint.get(i));
+            }
+
+            return rectLine ;
+        }
+
+        @Override
+        protected void onPostExecute(PolylineOptions result) {
+            gMap.addPolyline(result);
+        }
+    }
+
+    @AfterPermissionGranted(LOCATION_PERMISSION)
+    private void drawRouteFromCurrentLocation() {
+        if (EasyPermissions.hasPermissions(this, locationPermission)) {
+            LocationManager locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+
+            Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+            LatLng myPosition = new LatLng(location.getLatitude(), location.getLongitude());
+            new DrawRoute().execute(myPosition);
+        } else {
+            // Do not have permissions, request them now
+            EasyPermissions.requestPermissions(this, getString(R.string.no_location_permission),
+                    LOCATION_PERMISSION, locationPermission);
+        }
+    }
+    //endregion
+
+    //region Handling markers
     @Override
     public void onMapLongClick(LatLng latLng) {
         addKittenMarker(latLng, "Kitten Attack");
@@ -219,6 +254,17 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         kittyMarkers.add(kittyMarker);
     }
 
+
+    private void removeAllKittyMarkers() {
+        for (Marker kittyMarker : kittyMarkers) {
+            kittyMarker.remove();
+        }
+        kittyMarkers.clear();
+        kittyCounter = 0;
+    }
+    //endregion
+
+    //region Animating markers
     static void animateMarker(Marker marker, LatLng finalPosition) {
         // The typeevaluator does the calculations for the animation
         TypeEvaluator<LatLng> typeEvaluator = new TypeEvaluator<LatLng>() {
@@ -239,5 +285,56 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         animator.setDuration(1000);
         animator.start();
     }
+    //endregion
+
+    //region Handling permissions
+    @AfterPermissionGranted(LOCATION_PERMISSION)
+    private void setLocationEnabled() {
+
+        if (EasyPermissions.hasPermissions(this, locationPermission)) {
+            gMap.setMyLocationEnabled(true);
+        } else {
+            // Do not have permissions, request them now
+            EasyPermissions.requestPermissions(this, getString(R.string.no_location_permission),
+                    LOCATION_PERMISSION, locationPermission);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        // Forward results to EasyPermissions
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+    //endregion
+
+    //region Set up menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case (R.id.animateKittens):
+                for (Marker kittyMarker : kittyMarkers) {
+                    animateMarker(kittyMarker, FREDRIKSTAD);
+                }
+                break;
+            case (R.id.drawRoute):
+                drawRouteFromCurrentLocation();
+                break;
+            case R.id.removeKittens:
+                removeAllKittyMarkers();
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+    //endregion
 
 }

@@ -13,4 +13,11 @@
         android:icon="@drawable/ic_map"
         android:title="@string/drawroute"
         app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/removeKittens"
+        android:icon="@android:drawable/ic_menu_delete"
+        android:title="Remove Kittens"
+        app:showAsAction="ifRoom" />
+
 </menu>
