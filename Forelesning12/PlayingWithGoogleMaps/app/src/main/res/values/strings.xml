@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">PlayingWithGoogleMaps</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="drawroute">DrawRoute</string>
+    <string name="animatekittens">AnimateKittens</string>
+
+    <string name="normal">Normal</string>
+    <string name="hybrid">Hybrid</string>
+    <string name="satellite">Satellite</string>
+    <string name="terrain">Terrain</string>
+    <string name="none">None</string>
+
+    <string name="no_location_permission">We need permission to access your location</string>
+</resources>

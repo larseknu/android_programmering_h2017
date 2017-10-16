@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/animateKittens"
+        android:icon="@drawable/ic_cached"
+        android:title="@string/animatekittens"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/drawRoute"
+        android:icon="@drawable/ic_map"
+        android:title="@string/drawroute"
+        app:showAsAction="ifRoom" />
+</menu>
