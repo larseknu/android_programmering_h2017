@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">PlayingWithFirebase</string>
+    <string name="movie_poster">Movie Poster</string>
+    <string name="movie_title">Movie Title</string>
+    <string name="movie_header">Movie header</string>
+    <string name="movie_release_date">Movie release date</string>
+    <string name="play_button">Play Button</string>
+    <string name="skip_backward_button">Skip Backwards Button</string>
+    <string name="skip_forward_button">Skip Forward Button</string>
+    <string name="movie_title_deadpool">Deadpool</string>
+    <string name="movie_year_deadpool">2016</string>
+    <string name="duration_movie_deadpool">1 hr 48 min</string>
+    <string name="download_movie_button">Download Movie Button</string>
+    <string name="add_to_playlist_button">Add To Playlist Button</string>
+    <string name="mark_as_watched_button">Mark As Watched Button</string>
+    <string name="time_icon">Time Icon</string>
+    <string name="description">Lorem ipsum.....</string>
+    <string name="sign_out">Sign out</string>
+</resources>
